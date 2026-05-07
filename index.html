@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KBO 구장 날씨 & 뉴스</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <header>
+    <h1>⚾ KBO 구장 날씨 & 뉴스</h1>
+  </header>
+
+  <main class="layout">
+    <section class="map-section">
+      <h2>대한민국 야구장 지도</h2>
+
+      <div class="korea-map">
+        <button class="stadium-btn" data-stadium="잠실" style="top:28%; left:53%;">잠실</button>
+        <button class="stadium-btn" data-stadium="고척" style="top:26%; left:50%;">고척</button>
+        <button class="stadium-btn" data-stadium="문학" style="top:24%; left:45%;">문학</button>
+        <button class="stadium-btn" data-stadium="수원" style="top:34%; left:52%;">수원</button>
+        <button class="stadium-btn" data-stadium="대전" style="top:48%; left:57%;">대전</button>
+        <button class="stadium-btn" data-stadium="대구" style="top:57%; left:72%;">대구</button>
+        <button class="stadium-btn" data-stadium="광주" style="top:68%; left:42%;">광주</button>
+        <button class="stadium-btn" data-stadium="사직" style="top:72%; left:74%;">사직</button>
+        <button class="stadium-btn" data-stadium="창원" style="top:77%; left:66%;">창원</button>
+      </div>
+    </section>
+
+    <section class="info-section">
+      <div class="weather-card">
+        <h2 id="stadium-title">구장을 선택해주세요</h2>
+        <div id="weather-content">날씨 정보가 표시됩니다.</div>
+      </div>
+
+      <div class="news-card">
+        <h2>최근 뉴스</h2>
+        <div id="news-content">뉴스가 표시됩니다.</div>
+      </div>
+    </section>
+  </main>
+
+  <script src="./app.js"></script>
+</body>
+</html>

@@ -1,0 +1,80 @@
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#0f172a;
+  color:white;
+}
+
+header{
+  background:#111827;
+  padding:20px;
+  text-align:center;
+}
+
+.layout{
+  display:flex;
+  gap:20px;
+  padding:20px;
+}
+
+.map-section,.info-section{
+  flex:1;
+}
+
+.korea-map{
+  position:relative;
+  width:100%;
+  height:700px;
+  background:#1e293b;
+  border-radius:20px;
+}
+
+.stadium-btn{
+  position:absolute;
+  transform:translate(-50%,-50%);
+  background:#22c55e;
+  border:none;
+  padding:10px 14px;
+  border-radius:999px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.weather-card,.news-card{
+  background:#1e293b;
+  border-radius:20px;
+  padding:20px;
+  margin-bottom:20px;
+}
+
+.weather-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
+}
+
+.weather-item,.news-item{
+  background:#111827;
+  padding:12px;
+  border-radius:12px;
+}
+
+.news-item{
+  margin-bottom:10px;
+}
+
+.news-item a{
+  color:#60a5fa;
+  text-decoration:none;
+}
+
+@media(max-width:900px){
+  .layout{
+    flex-direction:column;
+  }
+
+  .weather-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
