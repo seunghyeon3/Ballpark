@@ -7,40 +7,82 @@
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-  <header>
-    <h1>⚾ KBO 구장 날씨 & 뉴스</h1>
-  </header>
 
-  <main class="layout">
-    <section class="map-section">
-      <h2>대한민국 야구장 지도</h2>
+<header>
+  <h1>⚾ KBO WEATHER & NEWS</h1>
+</header>
 
-      <div class="korea-map">
-        <button class="stadium-btn" data-stadium="잠실" style="top:28%; left:53%;">잠실</button>
-        <button class="stadium-btn" data-stadium="고척" style="top:26%; left:50%;">고척</button>
-        <button class="stadium-btn" data-stadium="문학" style="top:24%; left:45%;">문학</button>
-        <button class="stadium-btn" data-stadium="수원" style="top:34%; left:52%;">수원</button>
-        <button class="stadium-btn" data-stadium="대전" style="top:48%; left:57%;">대전</button>
-        <button class="stadium-btn" data-stadium="대구" style="top:57%; left:72%;">대구</button>
-        <button class="stadium-btn" data-stadium="광주" style="top:68%; left:42%;">광주</button>
-        <button class="stadium-btn" data-stadium="사직" style="top:72%; left:74%;">사직</button>
-        <button class="stadium-btn" data-stadium="창원" style="top:77%; left:66%;">창원</button>
+<main class="layout">
+
+  <section class="map-panel">
+    <div class="map-wrap">
+
+      <button class="stadium-btn active" data-stadium="잠실" style="top:30%; left:58%;">
+        잠실
+      </button>
+
+      <button class="stadium-btn" data-stadium="고척" style="top:28%; left:54%;">
+        고척
+      </button>
+
+      <button class="stadium-btn" data-stadium="문학" style="top:26%; left:46%;">
+        문학
+      </button>
+
+      <button class="stadium-btn" data-stadium="수원" style="top:38%; left:55%;">
+        수원
+      </button>
+
+      <button class="stadium-btn" data-stadium="대전" style="top:50%; left:59%;">
+        대전
+      </button>
+
+      <button class="stadium-btn" data-stadium="대구" style="top:58%; left:72%;">
+        대구
+      </button>
+
+      <button class="stadium-btn" data-stadium="광주" style="top:69%; left:44%;">
+        광주
+      </button>
+
+      <button class="stadium-btn" data-stadium="사직" style="top:73%; left:74%;">
+        사직
+      </button>
+
+      <button class="stadium-btn" data-stadium="창원" style="top:78%; left:66%;">
+        창원
+      </button>
+
+    </div>
+  </section>
+
+  <section class="info-panel">
+
+    <div class="card">
+      <div class="card-header">
+        <h2 id="stadium-title">잠실 구장</h2>
+        <span class="live-badge">LIVE WEATHER</span>
       </div>
-    </section>
 
-    <section class="info-section">
-      <div class="weather-card">
-        <h2 id="stadium-title">구장을 선택해주세요</h2>
-        <div id="weather-content">날씨 정보가 표시됩니다.</div>
+      <div id="weather-content">
+        데이터를 불러오는 중...
       </div>
+    </div>
 
-      <div class="news-card">
+    <div class="card">
+      <div class="card-header">
         <h2>최근 뉴스</h2>
-        <div id="news-content">뉴스가 표시됩니다.</div>
       </div>
-    </section>
-  </main>
 
-  <script src="./app.js"></script>
+      <div id="news-content">
+        뉴스를 불러오는 중...
+      </div>
+    </div>
+
+  </section>
+
+</main>
+
+<script src="./app.js"></script>
 </body>
 </html>
