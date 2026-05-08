@@ -19,8 +19,6 @@ body{
   font-family:Arial,sans-serif;
 }
 
-/* HEADER */
-
 .header{
   padding:20px 28px;
   background:#111827;
@@ -47,16 +45,16 @@ body{
 
 /* MAP */
 
-.map-area{
+.map-wrap{
 
   position:relative;
 
   width:100%;
-  height:820px;
-
-  border-radius:24px;
+  height:850px;
 
   background:#111827;
+
+  border-radius:24px;
 
   border:
     1px solid rgba(255,255,255,.08);
@@ -64,93 +62,80 @@ body{
   overflow:hidden;
 }
 
-/* KOREA */
+/* REAL MAP */
 
-.korea{
+.korea-map{
 
   position:absolute;
 
-  inset:40px;
+  inset:0;
 
-  background:white;
+  width:100%;
+  height:100%;
 
-  opacity:.95;
+  object-fit:contain;
 
-  clip-path:polygon(
-    42% 0%,
-    60% 8%,
-    72% 20%,
-    70% 36%,
-    80% 55%,
-    74% 72%,
-    64% 92%,
-    48% 100%,
-    30% 90%,
-    20% 72%,
-    16% 50%,
-    22% 30%,
-    32% 12%
-  );
+  opacity:.9;
+
+  padding:30px;
 }
 
-/* TEAM BUTTON */
+/* TEAM */
 
-.team-btn{
+.team{
 
   position:absolute;
 
-  transform:
-    translate(-50%,-50%);
-
-  width:62px;
-  height:62px;
+  width:64px;
+  height:64px;
 
   border-radius:50%;
 
   border:none;
 
-  font-size:14px;
+  color:white;
+
   font-weight:bold;
 
   cursor:pointer;
 
+  transform:
+    translate(-50%,-50%);
+
   transition:.2s;
 
   z-index:10;
-
-  color:white;
 }
 
-.team-btn:hover{
+.team:hover{
 
   transform:
     translate(-50%,-50%)
     scale(1.08);
 }
 
-.team-btn.active{
+.team.active{
+
+  border:3px solid white;
 
   box-shadow:
-    0 0 22px
+    0 0 24px
     rgba(255,255,255,.8);
-
-  border:
-    3px solid white;
 }
 
-/* TEAM COLORS */
+/* TEAM COLOR */
 
 .lg{background:#c30452;}
 .kiwoom{background:#570514;}
 .ssg{background:#ce0e2d;}
-.kt{background:#000000;}
+.kt{background:#000;}
 .hanwha{background:#ff6600;}
 .samsung{background:#074ca1;}
 .kia{background:#ea0029;}
 .lotte{background:#041e42;}
 .nc{background:#315288;}
 
-/* RIGHT */
+/* CARD */
 
 .card{
 
@@ -254,7 +239,7 @@ body{
     grid-template-columns:1fr;
   }
 
-  .map-area{
+  .map-wrap{
     height:620px;
   }
 
@@ -275,8 +260,8 @@ body{
   <h1>⚾ KBO Weather & News</h1>
 
   <p>
-    구단 마크를 클릭하면
-    날씨와 뉴스를 확인할 수 있습니다.
+    구단을 클릭하면
+    실시간 날씨와 뉴스가 변경됩니다.
   </p>
 
 </header>
@@ -285,61 +270,66 @@ body{
 
   <!-- LEFT -->
 
-  <section class="map-area">
+  <section class="map-wrap">
 
-    <div class="korea"></div>
+    <img
+      class="korea-map"
+      src="https://upload.wikimedia.org/wikipedia/commons/0/09/South_Korea_blank_map.svg"
+    />
 
-    <button class="team-btn lg active"
+    <!-- TEAM -->
+
+    <button class="team lg active"
       data-team="LG"
-      style="top:28%; left:55%;">
+      style="top:28%; left:56%;">
       LG
     </button>
 
-    <button class="team-btn kiwoom"
+    <button class="team kiwoom"
       data-team="키움"
-      style="top:24%; left:48%;">
+      style="top:24%; left:49%;">
       KI
     </button>
 
-    <button class="team-btn ssg"
+    <button class="team ssg"
       data-team="SSG"
-      style="top:22%; left:38%;">
+      style="top:22%; left:40%;">
       SG
     </button>
 
-    <button class="team-btn kt"
+    <button class="team kt"
       data-team="KT"
-      style="top:36%; left:52%;">
+      style="top:36%; left:53%;">
       KT
     </button>
 
-    <button class="team-btn hanwha"
+    <button class="team hanwha"
       data-team="한화"
-      style="top:50%; left:56%;">
+      style="top:50%; left:57%;">
       HH
     </button>
 
-    <button class="team-btn samsung"
+    <button class="team samsung"
       data-team="삼성"
       style="top:60%; left:70%;">
       SL
     </button>
 
-    <button class="team-btn kia"
+    <button class="team kia"
       data-team="KIA"
-      style="top:70%; left:40%;">
+      style="top:70%; left:42%;">
       KIA
     </button>
 
-    <button class="team-btn lotte"
+    <button class="team lotte"
       data-team="롯데"
-      style="top:74%; left:75%;">
+      style="top:74%; left:76%;">
       LT
     </button>
 
-    <button class="team-btn nc"
+    <button class="team nc"
       data-team="NC"
-      style="top:80%; left:64%;">
+      style="top:80%; left:65%;">
       NC
     </button>
 
@@ -389,35 +379,65 @@ body{
 
 const teams = {
 
-  "LG":"LG 트윈스",
-  "키움":"키움 히어로즈",
-  "SSG":"SSG 랜더스",
-  "KT":"KT 위즈",
-  "한화":"한화 이글스",
-  "삼성":"삼성 라이온즈",
-  "KIA":"KIA 타이거즈",
-  "롯데":"롯데 자이언츠",
-  "NC":"NC 다이노스"
+  LG:{
+    name:"LG 트윈스",
+    temp:[22,23,24,21],
+    rain:[10,20,30,15],
+    news:[
+      "LG 선발 임찬규 호투",
+      "LG 타선 집중력 상승",
+      "LG 불펜 ERA 1위",
+      "LG 연승 분위기",
+      "LG 홈 경기 매진"
+    ]
+  },
+
+  키움:{
+    name:"키움 히어로즈",
+    temp:[19,20,21,18],
+    rain:[30,40,50,35],
+    news:[
+      "키움 신인 활약",
+      "키움 중심타선 폭발",
+      "키움 감독 인터뷰",
+      "키움 홈 경기 분석",
+      "키움 불펜 안정"
+    ]
+  },
+
+  SSG:{
+    name:"SSG 랜더스",
+    temp:[21,22,20,19],
+    rain:[20,10,15,25],
+    news:[
+      "SSG 타격 상승세",
+      "SSG 외국인 활약",
+      "SSG 연패 탈출",
+      "SSG 홈런 선두",
+      "SSG 팬 반응"
+    ]
+  }
+
 };
 
 /* WEATHER */
 
 function renderWeather(team){
 
-  let html =
-    '<div class="weather-grid">';
+  const data = teams[team];
 
   const icons =
     ['☀️','⛅','🌧️','☁️'];
+
+  let html =
+    '<div class="weather-grid">';
 
   for(let i=0;i<4;i++){
 
     html += `
       <div class="weather-item">
 
-        <div>
-          ${12+i}:00
-        </div>
+        <div>${12+i}:00</div>
 
         <div style="
           font-size:34px;
@@ -430,7 +450,7 @@ function renderWeather(team){
           font-size:26px;
           font-weight:bold;
         ">
-          ${22+i}°
+          ${data.temp[i]}°
         </div>
 
         <div style="
@@ -438,8 +458,7 @@ function renderWeather(team){
           font-size:12px;
           color:#cbd5e1;
         ">
-          강수 ${10*i}%<br>
-          습도 ${55+i}%
+          강수 ${data.rain[i]}%
         </div>
 
       </div>
@@ -457,15 +476,17 @@ function renderWeather(team){
 
 function renderNews(team){
 
+  const data = teams[team];
+
   let html = '';
 
-  for(let i=1;i<=5;i++){
+  data.news.forEach(news=>{
 
     html += `
       <div class="news-item">
 
         <a href="#">
-          ${teams[team]} 관련 뉴스 ${i}
+          ${news}
         </a>
 
         <div class="news-date">
@@ -474,46 +495,38 @@ function renderNews(team){
 
       </div>
     `;
-  }
+  });
 
   document
     .getElementById('news')
     .innerHTML = html;
 }
 
-/* ACTIVE */
-
-function activate(btn){
-
-  document
-    .querySelectorAll('.team-btn')
-    .forEach(b=>{
-      b.classList.remove('active');
-    });
-
-  btn.classList.add('active');
-}
-
 /* CLICK */
 
 document
-  .querySelectorAll('.team-btn')
+  .querySelectorAll('.team')
   .forEach(btn=>{
 
     btn.addEventListener('click', ()=>{
 
+      document
+        .querySelectorAll('.team')
+        .forEach(b=>{
+          b.classList.remove('active');
+        });
+
+      btn.classList.add('active');
+
       const team =
         btn.dataset.team;
-
-      activate(btn);
 
       document
         .getElementById('title')
         .innerText =
-          teams[team];
+          teams[team].name;
 
       renderWeather(team);
-
       renderNews(team);
 
     });
