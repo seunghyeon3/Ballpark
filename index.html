@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>KBO Weather & News</title>
 
@@ -34,8 +34,6 @@ body{
   color:#94a3b8;
 }
 
-/* LAYOUT */
-
 .container{
   display:grid;
   grid-template-columns:45% 55%;
@@ -49,22 +47,16 @@ body{
 
   position:relative;
 
-  width:100%;
   height:850px;
 
   background:#111827;
 
   border-radius:24px;
 
-  border:
-    1px solid rgba(255,255,255,.08);
-
   overflow:hidden;
 }
 
-/* REAL MAP */
-
-.korea-map{
+.korea-svg{
 
   position:absolute;
 
@@ -72,12 +64,6 @@ body{
 
   width:100%;
   height:100%;
-
-  object-fit:contain;
-
-  opacity:.9;
-
-  padding:30px;
 }
 
 /* TEAM */
@@ -123,7 +109,7 @@ body{
     rgba(255,255,255,.8);
 }
 
-/* TEAM COLOR */
+/* TEAM COLORS */
 
 .lg{background:#c30452;}
 .kiwoom{background:#570514;}
@@ -144,9 +130,6 @@ body{
   border-radius:24px;
 
   padding:24px;
-
-  border:
-    1px solid rgba(255,255,255,.08);
 
   margin-bottom:20px;
 }
@@ -179,23 +162,13 @@ body{
 
 /* WEATHER */
 
-.weather-grid{
-
-  display:grid;
-
-  grid-template-columns:
-    repeat(4,1fr);
-
-  gap:12px;
-}
-
-.weather-item{
+.weather-box{
 
   background:#1e293b;
 
   border-radius:18px;
 
-  padding:18px;
+  padding:28px;
 
   text-align:center;
 }
@@ -211,15 +184,6 @@ body{
   padding:16px;
 
   margin-bottom:12px;
-}
-
-.news-item a{
-
-  color:white;
-
-  text-decoration:none;
-
-  font-weight:600;
 }
 
 .news-date{
@@ -243,11 +207,6 @@ body{
     height:620px;
   }
 
-  .weather-grid{
-    grid-template-columns:
-      repeat(2,1fr);
-  }
-
 }
 
 </style>
@@ -260,22 +219,46 @@ body{
   <h1>⚾ KBO Weather & News</h1>
 
   <p>
-    구단을 클릭하면
-    실시간 날씨와 뉴스가 변경됩니다.
+    구단 클릭 시 날씨와 뉴스가 변경됩니다.
   </p>
 
 </header>
 
 <main class="container">
 
-  <!-- LEFT -->
+  <!-- MAP -->
 
   <section class="map-wrap">
 
-    <img
-      class="korea-map"
-      src="https://upload.wikimedia.org/wikipedia/commons/0/09/South_Korea_blank_map.svg"
-    />
+    <!-- SVG MAP -->
+
+    <svg
+      class="korea-svg"
+      viewBox="0 0 500 900">
+
+      <path
+        fill="white"
+        opacity="0.9"
+
+        d="
+        M220 40
+        L320 70
+        L380 140
+        L370 240
+        L420 360
+        L390 500
+        L340 700
+        L260 840
+        L170 760
+        L120 620
+        L100 430
+        L130 250
+        L180 100
+        Z
+        "
+      />
+
+    </svg>
 
     <!-- TEAM -->
 
@@ -335,7 +318,7 @@ body{
 
   </section>
 
-  <!-- RIGHT -->
+  <!-- INFO -->
 
   <section>
 
@@ -377,44 +360,56 @@ body{
 
 <script>
 
+/* API */
+
+const API_KEY =
+"QgHa6v2LSQ%2BqeGMmapD%2B%2FNH60g0vGKGvVKJsU4T0Msj9ooR8zRB4jtp6SN9PDRH19f7dSX2j1D2xqtCIxHsGlw%3D%3D";
+
+/* TEAM */
+
 const teams = {
 
   LG:{
     name:"LG 트윈스",
-    temp:[22,23,24,21],
-    rain:[10,20,30,15],
+    temp:"22",
+    icon:"☀️",
     news:[
       "LG 선발 임찬규 호투",
-      "LG 타선 집중력 상승",
-      "LG 불펜 ERA 1위",
-      "LG 연승 분위기",
-      "LG 홈 경기 매진"
+      "LG 타선 폭발",
+      "LG 홈경기 매진"
     ]
   },
 
   키움:{
     name:"키움 히어로즈",
-    temp:[19,20,21,18],
-    rain:[30,40,50,35],
+    temp:"18",
+    icon:"🌧️",
     news:[
       "키움 신인 활약",
-      "키움 중심타선 폭발",
       "키움 감독 인터뷰",
-      "키움 홈 경기 분석",
-      "키움 불펜 안정"
+      "키움 연승 분위기"
     ]
   },
 
   SSG:{
     name:"SSG 랜더스",
-    temp:[21,22,20,19],
-    rain:[20,10,15,25],
+    temp:"21",
+    icon:"⛅",
     news:[
       "SSG 타격 상승세",
-      "SSG 외국인 활약",
-      "SSG 연패 탈출",
       "SSG 홈런 선두",
-      "SSG 팬 반응"
+      "SSG 외국인 활약"
+    ]
+  },
+
+  KT:{
+    name:"KT 위즈",
+    temp:"20",
+    icon:"☁️",
+    news:[
+      "KT 마운드 안정",
+      "KT 홈런포 가동",
+      "KT 순위 상승"
     ]
   }
 
@@ -424,73 +419,59 @@ const teams = {
 
 function renderWeather(team){
 
-  const data = teams[team];
+  const data =
+    teams[team];
 
-  const icons =
-    ['☀️','⛅','🌧️','☁️'];
-
-  let html =
-    '<div class="weather-grid">';
-
-  for(let i=0;i<4;i++){
-
-    html += `
-      <div class="weather-item">
-
-        <div>${12+i}:00</div>
+  document
+    .getElementById('weather')
+    .innerHTML =
+    `
+      <div class="weather-box">
 
         <div style="
-          font-size:34px;
-          margin:10px 0;
+          font-size:60px;
         ">
-          ${icons[i]}
+          ${data.icon}
         </div>
 
         <div style="
-          font-size:26px;
+          font-size:40px;
           font-weight:bold;
+          margin-top:12px;
         ">
-          ${data.temp[i]}°
+          ${data.temp}°
         </div>
 
         <div style="
-          margin-top:8px;
-          font-size:12px;
-          color:#cbd5e1;
+          margin-top:12px;
+          color:#94a3b8;
         ">
-          강수 ${data.rain[i]}%
+          ${data.name} 현재 날씨
         </div>
 
       </div>
     `;
-  }
-
-  html += '</div>';
-
-  document
-    .getElementById('weather')
-    .innerHTML = html;
 }
 
 /* NEWS */
 
 function renderNews(team){
 
-  const data = teams[team];
+  const data =
+    teams[team];
 
   let html = '';
 
   data.news.forEach(news=>{
 
-    html += `
+    html +=
+    `
       <div class="news-item">
 
-        <a href="#">
-          ${news}
-        </a>
+        ${news}
 
         <div class="news-date">
-          2026-05-08
+          방금 전
         </div>
 
       </div>
@@ -499,37 +480,42 @@ function renderNews(team){
 
   document
     .getElementById('news')
-    .innerHTML = html;
+    .innerHTML =
+      html;
 }
 
 /* CLICK */
 
 document
-  .querySelectorAll('.team')
-  .forEach(btn=>{
+.querySelectorAll('.team')
+.forEach(btn=>{
 
-    btn.addEventListener('click', ()=>{
+  btn.addEventListener('click', ()=>{
 
-      document
-        .querySelectorAll('.team')
-        .forEach(b=>{
-          b.classList.remove('active');
-        });
+    document
+      .querySelectorAll('.team')
+      .forEach(b=>{
+        b.classList.remove('active');
+      });
 
-      btn.classList.add('active');
+    btn.classList.add('active');
 
-      const team =
-        btn.dataset.team;
+    const team =
+      btn.dataset.team;
 
-      document
-        .getElementById('title')
-        .innerText =
-          teams[team].name;
+    if(!teams[team]){
+      return;
+    }
 
-      renderWeather(team);
-      renderNews(team);
+    document
+      .getElementById('title')
+      .innerText =
+      teams[team].name;
 
-    });
+    renderWeather(team);
+    renderNews(team);
+
+  });
 
 });
 
