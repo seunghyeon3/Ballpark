@@ -6,121 +6,226 @@ body{
   margin:0;
   background:#08111f;
   color:white;
-  font-family:Arial,sans-serif;
+  font-family:
+    Pretendard,
+    Arial,
+    sans-serif;
 }
+
+/* HEADER */
 
 .header{
   padding:24px 36px;
+
   background:#111827;
-  border-bottom:1px solid rgba(255,255,255,.08);
+
+  border-bottom:
+    1px solid rgba(255,255,255,.08);
+}
+
+.header h1{
+  margin:0;
+  font-size:28px;
 }
 
 .header p{
+  margin-top:8px;
   color:#94a3b8;
 }
 
+/* LAYOUT */
+
 .container{
+
   display:grid;
-  grid-template-columns:48% 52%;
+
+  grid-template-columns:
+    48% 52%;
+
   gap:24px;
+
   padding:24px;
 }
 
+/* MAP */
+
 .map-area{
+
   position:relative;
+
+  width:100%;
   height:820px;
+
   border-radius:24px;
 
   background:
-    linear-gradient(rgba(0,0,0,.2),rgba(0,0,0,.2)),
+    linear-gradient(
+      rgba(0,0,0,.25),
+      rgba(0,0,0,.25)
+    ),
+
     url('https://upload.wikimedia.org/wikipedia/commons/9/95/South_Korea_location_map.svg');
 
   background-repeat:no-repeat;
   background-position:center;
   background-size:contain;
+
   background-color:#111827;
 
-  border:1px solid rgba(255,255,255,.08);
+  border:
+    1px solid rgba(255,255,255,.08);
 }
 
+/* BUTTON */
+
 .stadium-btn{
+
   position:absolute;
-  transform:translate(-50%,-50%);
+
+  transform:
+    translate(-50%,-50%);
 
   border:none;
+
   border-radius:999px;
 
-  padding:12px 18px;
+  padding:
+    12px 18px;
 
-  background:rgba(148,163,184,.25);
+  background:
+    rgba(148,163,184,.25);
 
   color:#cbd5e1;
+
   font-weight:700;
 
   cursor:pointer;
+
   transition:.2s;
 }
 
-.stadium-btn.active{
-  background:#22c55e;
-  color:black;
-  box-shadow:0 0 18px rgba(34,197,94,.45);
+.stadium-btn:hover{
+
+  transform:
+    translate(-50%,-50%)
+    scale(1.05);
 }
 
+.stadium-btn.active{
+
+  background:#22c55e;
+
+  color:black;
+
+  box-shadow:
+    0 0 18px
+    rgba(34,197,94,.45);
+}
+
+/* RIGHT PANEL */
+
 .card{
+
   background:#111827;
+
   border-radius:24px;
+
   padding:24px;
-  border:1px solid rgba(255,255,255,.08);
+
+  border:
+    1px solid rgba(255,255,255,.08);
+
   margin-bottom:24px;
 }
 
 .card-header{
+
   display:flex;
+
   justify-content:space-between;
+
   align-items:center;
+
   margin-bottom:20px;
 }
 
 .live-badge{
+
   background:#22c55e;
+
   color:black;
-  padding:6px 12px;
+
+  padding:
+    6px 12px;
+
   border-radius:999px;
+
   font-size:12px;
+
   font-weight:700;
 }
 
+/* WEATHER */
+
 .weather-grid{
+
   display:grid;
-  grid-template-columns:repeat(4,1fr);
+
+  grid-template-columns:
+    repeat(4,1fr);
+
   gap:14px;
 }
 
 .weather-item{
+
   background:#1e293b;
+
   border-radius:18px;
-  padding:16px;
+
+  padding:18px;
+
   text-align:center;
 }
 
+/* NEWS */
+
 .news-item{
+
   background:#1e293b;
+
   border-radius:18px;
-  padding:16px;
+
+  padding:18px;
+
   margin-bottom:12px;
 }
 
 .news-item a{
+
   color:white;
+
   text-decoration:none;
+
+  line-height:1.5;
+
+  font-weight:600;
+}
+
+.news-item a:hover{
+  color:#60a5fa;
 }
 
 .news-date{
+
   margin-top:8px;
+
   font-size:12px;
+
   color:#94a3b8;
 }
+
+/* MOBILE */
 
 @media(max-width:1000px){
 
@@ -133,7 +238,8 @@ body{
   }
 
   .weather-grid{
-    grid-template-columns:repeat(2,1fr);
+    grid-template-columns:
+      repeat(2,1fr);
   }
 
 }
