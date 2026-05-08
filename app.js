@@ -13,23 +13,23 @@ function renderWeather(name){
         </div>
 
         <div style="
-          font-size:32px;
+          font-size:34px;
           margin:10px 0;
         ">
           ☀️
         </div>
 
         <div style="
-          font-size:24px;
+          font-size:26px;
           font-weight:bold;
         ">
           ${22+i}°
         </div>
 
         <div style="
+          margin-top:8px;
           font-size:12px;
           color:#cbd5e1;
-          margin-top:8px;
         ">
           강수 ${10*i}%<br>
           습도 ${55+i}%
@@ -42,7 +42,7 @@ function renderWeather(name){
   html += '</div>';
 
   document
-    .getElementById('weather-content')
+    .getElementById('weather')
     .innerHTML = html;
 }
 
@@ -68,7 +68,7 @@ function renderNews(name){
   }
 
   document
-    .getElementById('news-content')
+    .getElementById('news')
     .innerHTML = html;
 }
 
@@ -89,19 +89,18 @@ document
 
     btn.addEventListener('click', ()=>{
 
-      const stadium =
-        btn.dataset.stadium;
-
       activate(btn);
 
+      const name =
+        btn.dataset.name;
+
       document
-        .getElementById('stadium-title')
+        .getElementById('title')
         .innerText =
-          stadium + ' 구장';
+          name + ' 구장';
 
-      renderWeather(stadium);
-
-      renderNews(stadium);
+      renderWeather(name);
+      renderNews(name);
 
     });
 

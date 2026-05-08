@@ -1,115 +1,391 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>KBO Weather & News</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-  <link rel="stylesheet" href="./style.css" />
+<title>KBO Weather & News</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  background:#08111f;
+  color:white;
+  font-family:Arial,sans-serif;
+}
+
+/* HEADER */
+
+.header{
+
+  padding:20px 28px;
+
+  background:#111827;
+
+  border-bottom:
+    1px solid rgba(255,255,255,.08);
+}
+
+.header h1{
+  margin:0;
+}
+
+.header p{
+  margin-top:8px;
+  color:#94a3b8;
+}
+
+/* LAYOUT */
+
+.container{
+
+  display:grid;
+
+  grid-template-columns:
+    45% 55%;
+
+  gap:20px;
+
+  padding:20px;
+
+  min-height:100vh;
+}
+
+/* LEFT */
+
+.map-area{
+
+  position:relative;
+
+  width:100%;
+  height:820px;
+
+  border-radius:24px;
+
+  background:#111827;
+
+  border:
+    1px solid rgba(255,255,255,.08);
+
+  overflow:hidden;
+}
+
+/* SIMPLE MAP */
+
+.korea-shape{
+
+  position:absolute;
+
+  inset:40px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #1e293b,
+      #0f172a
+    );
+
+  clip-path:polygon(
+    42% 0%,
+    60% 8%,
+    72% 20%,
+    70% 36%,
+    80% 55%,
+    74% 72%,
+    64% 92%,
+    48% 100%,
+    30% 90%,
+    20% 72%,
+    16% 50%,
+    22% 30%,
+    32% 12%
+  );
+
+  opacity:.95;
+}
+
+/* BUTTON */
+
+.stadium-btn{
+
+  position:absolute;
+
+  transform:
+    translate(-50%,-50%);
+
+  border:none;
+
+  border-radius:999px;
+
+  padding:
+    12px 18px;
+
+  background:
+    rgba(148,163,184,.25);
+
+  color:#cbd5e1;
+
+  font-weight:700;
+
+  cursor:pointer;
+
+  transition:.2s;
+
+  z-index:10;
+}
+
+.stadium-btn:hover{
+
+  transform:
+    translate(-50%,-50%)
+    scale(1.05);
+}
+
+.stadium-btn.active{
+
+  background:#22c55e;
+
+  color:black;
+
+  box-shadow:
+    0 0 20px
+    rgba(34,197,94,.5);
+}
+
+/* RIGHT */
+
+.card{
+
+  background:#111827;
+
+  border-radius:24px;
+
+  padding:24px;
+
+  border:
+    1px solid rgba(255,255,255,.08);
+
+  margin-bottom:20px;
+}
+
+.card-header{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  margin-bottom:20px;
+}
+
+.live{
+
+  background:#22c55e;
+
+  color:black;
+
+  padding:
+    6px 12px;
+
+  border-radius:999px;
+
+  font-size:12px;
+
+  font-weight:bold;
+}
+
+/* WEATHER */
+
+.weather-grid{
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(4,1fr);
+
+  gap:12px;
+}
+
+.weather-item{
+
+  background:#1e293b;
+
+  border-radius:18px;
+
+  padding:18px;
+
+  text-align:center;
+}
+
+/* NEWS */
+
+.news-item{
+
+  background:#1e293b;
+
+  border-radius:18px;
+
+  padding:16px;
+
+  margin-bottom:12px;
+}
+
+.news-item a{
+
+  color:white;
+
+  text-decoration:none;
+
+  font-weight:600;
+}
+
+.news-date{
+
+  margin-top:8px;
+
+  color:#94a3b8;
+
+  font-size:12px;
+}
+
+/* MOBILE */
+
+@media(max-width:1000px){
+
+  .container{
+    grid-template-columns:1fr;
+  }
+
+  .map-area{
+    height:620px;
+  }
+
+  .weather-grid{
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+
+}
+
+</style>
 </head>
 
 <body>
 
 <header class="header">
 
-  <div>
-    <h1>⚾ KBO Ballpark Weather & News</h1>
-    <p>구장을 선택하면 단기 예보와 최근 뉴스를 확인할 수 있습니다.</p>
-  </div>
+  <h1>⚾ KBO Weather & News</h1>
+
+  <p>
+    구장을 클릭하면 단기 예보와
+    최근 뉴스를 확인할 수 있습니다.
+  </p>
 
 </header>
 
 <main class="container">
 
   <!-- LEFT -->
-  <section class="map-panel">
 
-    <div class="map-area">
+  <section class="map-area">
 
-      <button class="stadium-btn active"
-        data-stadium="잠실"
-        style="top:30%; left:57%;">
-        잠실
-      </button>
+    <div class="korea-shape"></div>
 
-      <button class="stadium-btn"
-        data-stadium="고척"
-        style="top:27%; left:52%;">
-        고척
-      </button>
+    <button class="stadium-btn active"
+      data-name="잠실"
+      style="top:28%; left:55%;">
+      잠실
+    </button>
 
-      <button class="stadium-btn"
-        data-stadium="문학"
-        style="top:24%; left:44%;">
-        문학
-      </button>
+    <button class="stadium-btn"
+      data-name="고척"
+      style="top:24%; left:48%;">
+      고척
+    </button>
 
-      <button class="stadium-btn"
-        data-stadium="수원"
-        style="top:37%; left:55%;">
-        수원
-      </button>
+    <button class="stadium-btn"
+      data-name="문학"
+      style="top:22%; left:38%;">
+      문학
+    </button>
 
-      <button class="stadium-btn"
-        data-stadium="대전"
-        style="top:49%; left:58%;">
-        대전
-      </button>
+    <button class="stadium-btn"
+      data-name="수원"
+      style="top:36%; left:52%;">
+      수원
+    </button>
 
-      <button class="stadium-btn"
-        data-stadium="대구"
-        style="top:58%; left:71%;">
-        대구
-      </button>
+    <button class="stadium-btn"
+      data-name="대전"
+      style="top:50%; left:56%;">
+      대전
+    </button>
 
-      <button class="stadium-btn"
-        data-stadium="광주"
-        style="top:68%; left:43%;">
-        광주
-      </button>
+    <button class="stadium-btn"
+      data-name="대구"
+      style="top:60%; left:70%;">
+      대구
+    </button>
 
-      <button class="stadium-btn"
-        data-stadium="사직"
-        style="top:73%; left:74%;">
-        사직
-      </button>
+    <button class="stadium-btn"
+      data-name="광주"
+      style="top:70%; left:40%;">
+      광주
+    </button>
 
-      <button class="stadium-btn"
-        data-stadium="창원"
-        style="top:78%; left:66%;">
-        창원
-      </button>
+    <button class="stadium-btn"
+      data-name="사직"
+      style="top:74%; left:75%;">
+      사직
+    </button>
 
-    </div>
+    <button class="stadium-btn"
+      data-name="창원"
+      style="top:80%; left:64%;">
+      창원
+    </button>
 
   </section>
 
   <!-- RIGHT -->
-  <section class="info-panel">
+
+  <section>
 
     <!-- WEATHER -->
+
     <div class="card">
 
       <div class="card-header">
-        <h2 id="stadium-title">잠실 구장</h2>
 
-        <span class="live-badge">
+        <h2 id="title">
+          잠실 구장
+        </h2>
+
+        <span class="live">
           LIVE
         </span>
+
       </div>
 
-      <div id="weather-content"></div>
+      <div id="weather"></div>
 
     </div>
 
     <!-- NEWS -->
+
     <div class="card">
 
       <div class="card-header">
         <h2>최근 뉴스</h2>
       </div>
 
-      <div id="news-content"></div>
+      <div id="news"></div>
 
     </div>
 
