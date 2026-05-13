@@ -3,528 +3,55 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>KBO Weather & News</title>
-
-<style>
-
-*{
-  box-sizing:border-box;
-}
-
-body{
-  margin:0;
-  background:#08111f;
-  color:white;
-  font-family:Arial,sans-serif;
-}
-
-.header{
-  padding:20px 28px;
-  background:#111827;
-  border-bottom:1px solid rgba(255,255,255,.08);
-}
-
-.header h1{
-  margin:0;
-}
-
-.header p{
-  margin-top:8px;
-  color:#94a3b8;
-}
-
-.container{
-  display:grid;
-  grid-template-columns:45% 55%;
-  gap:20px;
-  padding:20px;
-}
-
-/* MAP */
-
-.map-wrap{
-
-  position:relative;
-
-  height:850px;
-
-  background:#111827;
-
-  border-radius:24px;
-
-  overflow:hidden;
-}
-
-.korea-svg{
-
-  position:absolute;
-
-  inset:0;
-
-  width:100%;
-  height:100%;
-}
-
-/* TEAM */
-
-.team{
-
-  position:absolute;
-
-  width:64px;
-  height:64px;
-
-  border-radius:50%;
-
-  border:none;
-
-  color:white;
-
-  font-weight:bold;
-
-  cursor:pointer;
-
-  transform:
-    translate(-50%,-50%);
-
-  transition:.2s;
-
-  z-index:10;
-}
-
-.team:hover{
-
-  transform:
-    translate(-50%,-50%)
-    scale(1.08);
-}
-
-.team.active{
-
-  border:3px solid white;
-
-  box-shadow:
-    0 0 24px
-    rgba(255,255,255,.8);
-}
-
-/* TEAM COLORS */
-
-.lg{background:#c30452;}
-.kiwoom{background:#570514;}
-.ssg{background:#ce0e2d;}
-.kt{background:#000;}
-.hanwha{background:#ff6600;}
-.samsung{background:#074ca1;}
-.kia{background:#ea0029;}
-.lotte{background:#041e42;}
-.nc{background:#315288;}
-
-/* CARD */
-
-.card{
-
-  background:#111827;
-
-  border-radius:24px;
-
-  padding:24px;
-
-  margin-bottom:20px;
-}
-
-.card-header{
-
-  display:flex;
-
-  justify-content:space-between;
-
-  align-items:center;
-
-  margin-bottom:20px;
-}
-
-.live{
-
-  background:#22c55e;
-
-  color:black;
-
-  padding:6px 12px;
-
-  border-radius:999px;
-
-  font-size:12px;
-
-  font-weight:bold;
-}
-
-/* WEATHER */
-
-.weather-box{
-
-  background:#1e293b;
-
-  border-radius:18px;
-
-  padding:28px;
-
-  text-align:center;
-}
-
-/* NEWS */
-
-.news-item{
-
-  background:#1e293b;
-
-  border-radius:18px;
-
-  padding:16px;
-
-  margin-bottom:12px;
-}
-
-.news-date{
-
-  margin-top:8px;
-
-  color:#94a3b8;
-
-  font-size:12px;
-}
-
-/* MOBILE */
-
-@media(max-width:1000px){
-
-  .container{
-    grid-template-columns:1fr;
-  }
-
-  .map-wrap{
-    height:620px;
-  }
-
-}
-
-</style>
+<link rel="stylesheet" href="./style.css">
 </head>
-
 <body>
 
 <header class="header">
-
   <h1>⚾ KBO Weather & News</h1>
-
-  <p>
-    구단 클릭 시 날씨와 뉴스가 변경됩니다.
-  </p>
-
+  <p>구단 클릭 시 실시간 날씨 및 뉴스 조회</p>
 </header>
 
-<main class="container">
+<main class="layout">
 
-  <!-- MAP -->
+<section class="map-section">
 
-  <section class="map-wrap">
+<svg class="korea-map" viewBox="0 0 520 900">
+<path fill="#ffffff"
+d="M220 40 L320 70 L380 140 L370 240 L420 360 L390 500 L340 700 L260 840 L170 760 L120 620 L100 430 L130 250 L180 100 Z"/>
+</svg>
 
-    <!-- SVG MAP -->
+<button class="team lg active" data-team="LG" style="top:28%; left:56%;">LG</button>
+<button class="team kiwoom" data-team="키움" style="top:24%; left:49%;">KI</button>
+<button class="team ssg" data-team="SSG" style="top:22%; left:40%;">SSG</button>
 
-    <svg
-      class="korea-svg"
-      viewBox="0 0 500 900">
+</section>
 
-      <path
-        fill="white"
-        opacity="0.9"
+<section class="info-section">
 
-        d="
-        M220 40
-        L320 70
-        L380 140
-        L370 240
-        L420 360
-        L390 500
-        L340 700
-        L260 840
-        L170 760
-        L120 620
-        L100 430
-        L130 250
-        L180 100
-        Z
-        "
-      />
+<div class="card">
+<div class="card-header">
+<h2 id="teamTitle">LG 트윈스</h2>
+<span class="live">LIVE</span>
+</div>
 
-    </svg>
+<div id="weather">loading...</div>
+</div>
 
-    <!-- TEAM -->
+<div class="card">
+<div class="card-header">
+<h2>최근 뉴스</h2>
+</div>
 
-    <button class="team lg active"
-      data-team="LG"
-      style="top:28%; left:56%;">
-      LG
-    </button>
+<div id="news">loading...</div>
+</div>
 
-    <button class="team kiwoom"
-      data-team="키움"
-      style="top:24%; left:49%;">
-      KI
-    </button>
-
-    <button class="team ssg"
-      data-team="SSG"
-      style="top:22%; left:40%;">
-      SG
-    </button>
-
-    <button class="team kt"
-      data-team="KT"
-      style="top:36%; left:53%;">
-      KT
-    </button>
-
-    <button class="team hanwha"
-      data-team="한화"
-      style="top:50%; left:57%;">
-      HH
-    </button>
-
-    <button class="team samsung"
-      data-team="삼성"
-      style="top:60%; left:70%;">
-      SL
-    </button>
-
-    <button class="team kia"
-      data-team="KIA"
-      style="top:70%; left:42%;">
-      KIA
-    </button>
-
-    <button class="team lotte"
-      data-team="롯데"
-      style="top:74%; left:76%;">
-      LT
-    </button>
-
-    <button class="team nc"
-      data-team="NC"
-      style="top:80%; left:65%;">
-      NC
-    </button>
-
-  </section>
-
-  <!-- INFO -->
-
-  <section>
-
-    <!-- WEATHER -->
-
-    <div class="card">
-
-      <div class="card-header">
-
-        <h2 id="title">
-          LG 트윈스
-        </h2>
-
-        <span class="live">
-          LIVE
-        </span>
-
-      </div>
-
-      <div id="weather"></div>
-
-    </div>
-
-    <!-- NEWS -->
-
-    <div class="card">
-
-      <div class="card-header">
-        <h2>최근 뉴스</h2>
-      </div>
-
-      <div id="news"></div>
-
-    </div>
-
-  </section>
+</section>
 
 </main>
 
-<script>
-
-/* API */
-
-const API_KEY =
-"QgHa6v2LSQ%2BqeGMmapD%2B%2FNH60g0vGKGvVKJsU4T0Msj9ooR8zRB4jtp6SN9PDRH19f7dSX2j1D2xqtCIxHsGlw%3D%3D";
-
-/* TEAM */
-
-const teams = {
-
-  LG:{
-    name:"LG 트윈스",
-    temp:"22",
-    icon:"☀️",
-    news:[
-      "LG 선발 임찬규 호투",
-      "LG 타선 폭발",
-      "LG 홈경기 매진"
-    ]
-  },
-
-  키움:{
-    name:"키움 히어로즈",
-    temp:"18",
-    icon:"🌧️",
-    news:[
-      "키움 신인 활약",
-      "키움 감독 인터뷰",
-      "키움 연승 분위기"
-    ]
-  },
-
-  SSG:{
-    name:"SSG 랜더스",
-    temp:"21",
-    icon:"⛅",
-    news:[
-      "SSG 타격 상승세",
-      "SSG 홈런 선두",
-      "SSG 외국인 활약"
-    ]
-  },
-
-  KT:{
-    name:"KT 위즈",
-    temp:"20",
-    icon:"☁️",
-    news:[
-      "KT 마운드 안정",
-      "KT 홈런포 가동",
-      "KT 순위 상승"
-    ]
-  }
-
-};
-
-/* WEATHER */
-
-function renderWeather(team){
-
-  const data =
-    teams[team];
-
-  document
-    .getElementById('weather')
-    .innerHTML =
-    `
-      <div class="weather-box">
-
-        <div style="
-          font-size:60px;
-        ">
-          ${data.icon}
-        </div>
-
-        <div style="
-          font-size:40px;
-          font-weight:bold;
-          margin-top:12px;
-        ">
-          ${data.temp}°
-        </div>
-
-        <div style="
-          margin-top:12px;
-          color:#94a3b8;
-        ">
-          ${data.name} 현재 날씨
-        </div>
-
-      </div>
-    `;
-}
-
-/* NEWS */
-
-function renderNews(team){
-
-  const data =
-    teams[team];
-
-  let html = '';
-
-  data.news.forEach(news=>{
-
-    html +=
-    `
-      <div class="news-item">
-
-        ${news}
-
-        <div class="news-date">
-          방금 전
-        </div>
-
-      </div>
-    `;
-  });
-
-  document
-    .getElementById('news')
-    .innerHTML =
-      html;
-}
-
-/* CLICK */
-
-document
-.querySelectorAll('.team')
-.forEach(btn=>{
-
-  btn.addEventListener('click', ()=>{
-
-    document
-      .querySelectorAll('.team')
-      .forEach(b=>{
-        b.classList.remove('active');
-      });
-
-    btn.classList.add('active');
-
-    const team =
-      btn.dataset.team;
-
-    if(!teams[team]){
-      return;
-    }
-
-    document
-      .getElementById('title')
-      .innerText =
-      teams[team].name;
-
-    renderWeather(team);
-    renderNews(team);
-
-  });
-
-});
-
-/* DEFAULT */
-
-renderWeather('LG');
-renderNews('LG');
-
-</script>
+<script src="./app.js"></script>
 
 </body>
 </html>

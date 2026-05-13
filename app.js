@@ -1,110 +1,73 @@
-function renderWeather(name){
+const WORKER_URL = 'https://YOUR-WORKER.workers.dev';
 
-  let html =
-    '<div class="weather-grid">';
+const teams = {
+LG:{name:'LG 트윈스',nx:60,ny:127},
+키움:{name:'키움 히어로즈',nx:58,ny:126},
+SSG:{name:'SSG 랜더스',nx:55,ny:124}
+};
 
-  for(let i=0;i<4;i++){
+async function renderWeather(team){
 
-    html += `
-      <div class="weather-item">
+const info = teams[team];
 
-        <div>
-          ${12+i}:00
-        </div>
+const res = await fetch(
+`${WORKER_URL}/weather?nx=${info.nx}&ny=${info.ny}`
+);
 
-        <div style="
-          font-size:34px;
-          margin:10px 0;
-        ">
-          ☀️
-        </div>
+const data = await res.json();
 
-        <div style="
-          font-size:26px;
-          font-weight:bold;
-        ">
-          ${22+i}°
-        </div>
-
-        <div style="
-          margin-top:8px;
-          font-size:12px;
-          color:#cbd5e1;
-        ">
-          강수 ${10*i}%<br>
-          습도 ${55+i}%
-        </div>
-
-      </div>
-    `;
-  }
-
-  html += '</div>';
-
-  document
-    .getElementById('weather')
-    .innerHTML = html;
+document.getElementById('weather').innerHTML = `
+<div class="weather-box">
+<div style="font-size:60px;">${data.icon}</div>
+<div style="font-size:42px;font-weight:bold;">${data.temp}°</div>
+<div>${info.name} 현재 날씨</div>
+</div>
+`;
 }
 
-function renderNews(name){
+async function renderNews(team){
 
-  let html = '';
+const res = await fetch(
+`${WORKER_URL}/news?team=${encodeURIComponent(team)}`
+);
 
-  for(let i=1;i<=5;i++){
+const news = await res.json();
 
-    html += `
-      <div class="news-item">
+let html = '';
 
-        <a href="#">
-          ${name} 관련 뉴스 ${i}
-        </a>
+news.forEach(item=>{
+html += `
+<div class="news-item">
+<div>${item.title}</div>
+<div>${item.date}</div>
+</div>
+`;
+});
 
-        <div class="news-date">
-          2026-05-08
-        </div>
-
-      </div>
-    `;
-  }
-
-  document
-    .getElementById('news')
-    .innerHTML = html;
+document.getElementById('news').innerHTML = html;
 }
 
-function activate(btn){
+document.querySelectorAll('.team')
+.forEach(btn=>{
 
-  document
-    .querySelectorAll('.stadium-btn')
-    .forEach(b=>{
-      b.classList.remove('active');
-    });
+btn.addEventListener('click', async ()=>{
 
-  btn.classList.add('active');
-}
+document.querySelectorAll('.team')
+.forEach(b=>b.classList.remove('active'));
 
-document
-  .querySelectorAll('.stadium-btn')
-  .forEach(btn=>{
+btn.classList.add('active');
 
-    btn.addEventListener('click', ()=>{
+const team = btn.dataset.team;
 
-      activate(btn);
+document.getElementById('teamTitle').innerText =
+teams[team].name;
 
-      const name =
-        btn.dataset.name;
-
-      document
-        .getElementById('title')
-        .innerText =
-          name + ' 구장';
-
-      renderWeather(name);
-      renderNews(name);
-
-    });
+await renderWeather(team);
+await renderNews(team);
 
 });
 
-renderWeather('잠실');
-renderNews('잠실');
+});
+
+renderWeather('LG');
+renderNews('LG');
